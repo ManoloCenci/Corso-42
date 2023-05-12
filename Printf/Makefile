@@ -10,20 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
-SCR = ./ft_putchar.c ./ft_printf.c ./ft_hexadecimal.c ./ft_putnbr.c ./ft_putstr.c ./ft_unsint.c ./ft_voidhex.c
-FLAGS = -Wall -Wextra -Werror
-OBJ = $(SCR:%.c=%.o)
+NAME := libftprintf.a
+
+OBJS := ft_printf.o ft_hexadecimal.o ft_putchar.o ft_putnbr.o ft_putstr.o ft_unsint.o ft_voidhex.o
+
+FLAGS := -Wall -Werror -Wextra
 
 all: $(NAME)
-$(NAME):
-		gcc -c $(FLAGS) $(SCR)
-		ar rcs $(NAME) $(OBJ)
+
+%.o : %.c
+	gcc $(FLAGS) -o $@ -c $<
+
+$(NAME): $(OBJS)
+	ar crs $(NAME) $(OBJS)
 
 clean:
-		rm -f $(OBJ)
+	rm -f $(OBJS) ${B_OBJS}
 
-fclean:	clean
-		rm -f $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:	fclean all
+re: fclean all
